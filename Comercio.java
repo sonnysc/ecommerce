@@ -1,28 +1,11 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 // Clase Cliente
 class Cliente {
-    private String nombre;
-    private String direccion;
-
-    public Cliente(String nombre, String direccion) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente: " + nombre + ", Dirección: " + direccion;
-    }
+    private String nombre, direccion;
+    public Cliente(String nombre, String direccion) { this.nombre = nombre; this.direccion = direccion; }
+    public String getNombre() { return nombre; }
+    public String toString() { return "Cliente: " + nombre + ", Dirección: " + direccion; }
 }
 
 // Clase Pedido
@@ -30,29 +13,12 @@ class Pedido {
     private int numPedido;
     private List<String> articulos;
     private Cliente cliente;
-
     public Pedido(int numPedido, List<String> articulos, Cliente cliente) {
         this.numPedido = numPedido;
         this.articulos = articulos;
         this.cliente = cliente;
     }
-
-    public int getNumPedido() {
-        return numPedido;
-    }
-
-    public List<String> getArticulos() {
-        return articulos;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    @Override
-    public String toString() {
-        return "Pedido: " + numPedido + ", Artículos: " + articulos + ", Cliente: " + cliente.getNombre();
-    }
+    public String toString() { return "Pedido: " + numPedido + ", Artículos: " + articulos + ", Cliente: " + cliente.getNombre(); }
 }
 
 // Clase Pago
@@ -60,88 +26,70 @@ class Pago {
     private int numPedido;
     private String metodoPago;
     private double total;
-
     public Pago(int numPedido, String metodoPago, double total) {
         this.numPedido = numPedido;
         this.metodoPago = metodoPago;
         this.total = total;
     }
-
-    public int getNumPedido() {
-        return numPedido;
-    }
-
-    public String getMetodoPago() {
-        return metodoPago;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    @Override
-    public String toString() {
-        return "Pago del pedido " + numPedido + ": Método de pago: " + metodoPago + ", Total: " + total;
-    }
+    public String toString() { return "Pago del pedido " + numPedido + ": Método de pago: " + metodoPago + ", Total: " + total; }
 }
 
 // Clase Notificación
 class Notificacion {
     private int numPedido;
-    private String guia;
-    private String fechaEntrega;
-    private String correo;
-
+    private String guia, fechaEntrega, correo;
     public Notificacion(int numPedido, String guia, String fechaEntrega, String correo) {
         this.numPedido = numPedido;
         this.guia = guia;
         this.fechaEntrega = fechaEntrega;
         this.correo = correo;
     }
-
-    public int getNumPedido() {
-        return numPedido;
-    }
-
-    public String getGuia() {
-        return guia;
-    }
-
-    public String getFechaEntrega() {
-        return fechaEntrega;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    @Override
-    public String toString() {
-        return "Notificación: Pedido " + numPedido + ", Guía: " + guia + ", Fecha de entrega: " + fechaEntrega + ", Correo: " + correo;
-    }
+    public String toString() { return "Notificación: Pedido " + numPedido + ", Guía: " + guia + ", Fecha de entrega: " + fechaEntrega + ", Correo: " + correo; }
 }
 
 public class Comercio {
     public static void main(String[] args) {
-        // Crear un cliente
-        Cliente cliente = new Cliente("Jammal Rodriguez", "Blvd. Ameyal");
+        List<Cliente> clientes = Arrays.asList(
+            new Cliente("Jammal Rodriguez", "Blvd. Ameyal"),
+            new Cliente("Jonathan Sajor","secc. 7"),
+            new Cliente("Sergio Soto","Pontevedra"),
+            new Cliente("Kevin Vlencia","Agustin de Iturbide"),
+            new Cliente("Estefania Silva","Orquideas")
+        );
+        List<List<String>> articulosList = Arrays.asList(
+            Arrays.asList("Lenovo Ideapad", "SkullCandy"),
+            Arrays.asList("Gorra", "Leche"),
+            Arrays.asList("Logitech", "samsung"),
+            Arrays.asList("Iphone", "Espejo"),
+            Arrays.asList("Termo", "Zapatos")
+        );
+        List<Pedido> pedidos = new ArrayList<>();
+        for (int i = 0; i < clientes.size(); i++) {
+            pedidos.add(new Pedido(i + 1, articulosList.get(i), clientes.get(i)));
+        }
 
-        // Crear un pedido
-        List<String> articulos = new ArrayList<>();
-        articulos.add("Lenovo");
-        articulos.add("Troyan");
-        Pedido pedido = new Pedido(1, articulos, cliente);
+        List<Pago> pagos = Arrays.asList(
+            new Pago(1, "Tarjeta de crédito", 25000.00),
+            new Pago(1, "Tarjeta de crédito", 250.00),
+            new Pago(1, "Tarjeta de crédito", 6000.00),
+            new Pago(1, "Tarjeta de crédito", 8000.00),
+            new Pago(1, "Tarjeta de crédito", 1000.00)
+        );
 
-        // Crear un pago
-        Pago pago = new Pago(1, "Tarjeta de crédito", 250.00);
+        List<Notificacion> notificaciones = Arrays.asList(
+            new Notificacion(1, "7634827683282", "2024-09-15", "jammalfhz@gmail.com"),
+            new Notificacion(1, "9284702938492", "2024-10-16", "Jona@gmail.com"),
+            new Notificacion(1, "3847299384293", "2024-09-17", "SergioSC@gmail.com"),
+            new Notificacion(1, "7347928343749", "2024-11-18", "KevinVal@gmail.com"),
+            new Notificacion(1, "0192472229348", "2024-10-19", "EstefaniaS@gmail.com")
+        );
 
-        // Crear una notificación
-        Notificacion notificacion = new Notificacion(1, "7634827683282", "2024-09-15", "jammalfhz@gmail.com");
-
-        // Mostrar la información
-        System.out.println(cliente);
-        System.out.println(pedido);
-        System.out.println(pago);
-        System.out.println(notificacion);
+        for (int i = 0; i < clientes.size(); i++) {
+            System.out.println(clientes.get(i));
+            System.out.println(pedidos.get(i));
+            System.out.println(pagos.get(i));
+            System.out.println(notificaciones.get(i));
+            System.out.println("================================================================");
+        }
     }
 }
